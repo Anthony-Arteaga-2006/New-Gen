@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Gestión de Médicos";
+}
+
+<h2 class="mb-4">👨‍⚕️ Gestión de Médicos</h2>
+
+<!-- Pestañas (Ver, Agregar, Actualizar, Borrar) -->
+<ul class="nav nav-tabs" id="medicosTab" role="tablist">
+    <li class="nav-item">
+        <button class="nav-link active" id="ver-tab" data-bs-toggle="tab" data-bs-target="#ver" type="button">🔍 Ver / Listar</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" id="agregar-tab" data-bs-toggle="tab" data-bs-target="#agregar" type="button">➕ Agregar</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" id="actualizar-tab" data-bs-toggle="tab" data-bs-target="#actualizar" type="button">✏️ Actualizar</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" id="borrar-tab" data-bs-toggle="tab" data-bs-target="#borrar" type="button">🗑️ Borrar</button>
+    </li>
+</ul>
+
+<div class="tab-content border border-top-0 p-4 bg-white rounded-bottom" id="medicosTabContent">
+    <div class="tab-pane fade show active" id="ver">
+        <h4>Lista de Médicos</h4>
+        <p>Contenido para visualizar médicos.</p>
+    </div>
+    <div class="tab-pane fade" id="agregar">
+        <h4>Agregar Médico</h4>
+        <p>Formulario para registrar médico.</p>
+    </div>
+    <div class="tab-pane fade" id="actualizar">
+        <h4>Actualizar Médico</h4>
+        <p>Formulario para modificar médico.</p>
+    </div>
+    <div class="tab-pane fade" id="borrar">
+        <h4>Borrar Médico</h4>
+        <p>Formulario para eliminar médico.</p>
+    </div>
+</div>

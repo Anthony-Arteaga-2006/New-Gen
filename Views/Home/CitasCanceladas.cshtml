@@ -1,0 +1,39 @@
+@{
+    ViewData["Title"] = "Citas Canceladas";
+}
+
+<h2 class="mb-4">❌ Registro de Citas Canceladas</h2>
+
+<ul class="nav nav-tabs" id="citasCanceladasTab" role="tablist">
+    <li class="nav-item">
+        <button class="nav-link active" id="ver-cc-tab" data-bs-toggle="tab" data-bs-target="#ver-cc" type="button">🔍 Ver / Listar</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" id="agregar-cc-tab" data-bs-toggle="tab" data-bs-target="#agregar-cc" type="button">➕ Registrar Cancelación</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" id="actualizar-cc-tab" data-bs-toggle="tab" data-bs-target="#actualizar-cc" type="button">✏️ Actualizar Registro</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" id="borrar-cc-tab" data-bs-toggle="tab" data-bs-target="#borrar-cc" type="button">🗑️ Borrar Registro</button>
+    </li>
+</ul>
+
+<div class="tab-content border border-top-0 p-4 bg-white rounded-bottom" id="citasCanceladasTabContent">
+    <div class="tab-pane fade show active" id="ver-cc">
+        <h4>Historial de Cancelaciones</h4>
+        <p>Contenido para consultar citas anuladas.</p>
+    </div>
+    <div class="tab-pane fade" id="agregar-cc">
+        <h4>Registrar Cita Cancelada</h4>
+        <p>Formulario para pasar una cita a estado cancelada.</p>
+    </div>
+    <div class="tab-pane fade" id="actualizar-cc">
+        <h4>Modificar Cita Cancelada</h4>
+        <p>Formulario para actualizar datos de la cancelación.</p>
+    </div>
+    <div class="tab-pane fade" id="borrar-cc">
+        <h4>Eliminar Registro</h4>
+        <p>Formulario para borrar historial de cancelación.</p>
+    </div>
+</div>
