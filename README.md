@@ -1,68 +1,96 @@
 # New-Gen
 ====================================================================
-           DOCUMENTO DE REQUISITOS Y REQUERIMIENTOS
-            SISTEMA DE GESTION DE CITAS MEDICAS
+               CITAS MÉDICAS ASP.NET CORE - MARIADB
+            REQUISITOS DEL SISTEMA Y GUÍA DE MANEJO
 ====================================================================
 
-PROYECTO: CitasMedicas
-TECNOLOGIA: .NET 8 (ASP.NET Core MVC), Bootstrap 5, Razor Pages
-ENTORNO: Visual Studio Code
-
 --------------------------------------------------------------------
-1. REQUERIMIENTOS FUNCIONALES (RF)
+1. REQUISITOS DEL SISTEMA
 --------------------------------------------------------------------
+Para ejecutar y desarrollar este proyecto necesitas:
 
-[RF-01] NAVEGACION Y MENU PRINCIPAL
-- Barra de navegacion superior persistente (_Layout.cshtml).
-- Acceso directo a 6 secciones:
-  1. Inicio
-  2. Medicos
-  3. Pacientes
-  4. Citas Agregadas
-  5. Citas Canceladas
-  6. Privacidad
+* Entorno de Desarrollo:
+  - SDK de .NET 8.0 o superior.
+  - Visual Studio Code (con extensiones de C# y C# Dev Kit).
 
-[RF-02] SECCION MEDICOS
-- Ver / Listar: Mostrar lista de medicos registrados (ID, Nombre, Especialidad).
-- Agregar: Formulario para registrar un nuevo medico.
-- Actualizar: Formulario para modificar datos de un medico por ID.
-- Borrar: Formulario para eliminar un medico por ID.
+* Base de Datos y Servidor:
+  - MariaDB Server (o MySQL 8.0+).
+  - Servicio activo en puerto local (por defecto 3306).
 
-[RF-03] SECCION PACIENTES
-- Ver / Listar: Mostrar lista de pacientes (ID, Nombre, Documento).
-- Agregar: Formulario para registrar un nuevo paciente.
-- Actualizar: Formulario para modificar datos de un paciente por ID.
-- Borrar: Formulario para eliminar un paciente por ID.
-
-[RF-04] SECCION CITAS AGREGADAS
-- Ver / Listar: Mostrar citas agendadas (ID, Paciente, Medico, Fecha, Motivo).
-- Agregar: Formulario para agendar una nueva cita.
-- Actualizar: Formulario para cambiar la fecha o motivo por ID.
-- Borrar: Formulario para cancelar/eliminar una cita activa por ID.
-
-[RF-05] SECCION CITAS CANCELADAS
-- Ver / Listar: Mostrar historial de citas canceladas.
-- Agregar: Formulario para registrar una cita en la lista de canceladas.
-- Actualizar: Formulario para modificar el motivo de cancelacion por ID.
-- Borrar: Formulario para eliminar un registro del historial por ID.
-
-[RF-06] INICIO Y PRIVACIDAD
-- Inicio: Pantalla de bienvenida con accesos rapidos a las 4 secciones.
-- Privacidad: Nota de confidencialidad y proteccion de datos medicos.
+* Paquetes de NuGet instalados en el proyecto:
+  - Microsoft.EntityFrameworkCore (8.x)
+  - Microsoft.EntityFrameworkCore.Tools (8.x)
+  - Pomelo.EntityFrameworkCore.MySql (8.x)
 
 
 --------------------------------------------------------------------
-2. REQUISITOS NO FUNCIONALES (RNF)
+2. CONFIGURACIÓN Y CONEXIÓN
+--------------------------------------------------------------------
+* Cadena de conexión (appsettings.json):
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=CitasMedicasDb;User=root;Password=tu_contraseña;"
+  }
+
+* Configuración de servicios (Program.cs):
+  builder.Services.AddDbContext<ApplicationDbContext>(options =>
+      options.UseMySql(
+          builder.Configuration.GetConnectionString("DefaultConnection"),
+          ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
+      )
+  );
+
+
+--------------------------------------------------------------------
+3. GUÍA DE MANEJO Y EJECUCIÓN DEL PROYECTO
 --------------------------------------------------------------------
 
-[RNF-01] ARQUITECTURA
-- Estructura basada en el patron MVC (Model-View-Controller).
-- Controlador principal: HomeController.cs.
-- Vistas en tecnologia Razor (.cshtml).
+A. Iniciar la Aplicación:
+   1. Abre la terminal en VS Code dentro de la carpeta del proyecto.
+   2. Ejecuta el comando:
+      dotnet run
+   3. Abre la URL local generada (ej. http://localhost:5000) en el navegador.
 
-[RNF-02] INTERFAZ DE USUARIO (UI)
-- Diseno responsivo con Bootstrap 5.
-- Organizacion modular mediante pestañas interactivas (nav-tabs) para las acciones Ver, Agregar, Actualizar y Borrar en cada modulo.
+B. Módulos del Sistema (CRUD completo en MariaDB):
+   1. Médicos (Views/Home/Medicos.cshtml):
+      - Ver/Listar: Muestra la lista de médicos registrados.
+      - Agregar: Crea un registro con Nombre y Especialidad.
+      - Actualizar: Modifica datos ingresando el ID del médico.
+      - Eliminar: Borra el registro utilizando el ID.
+
+   2. Pacientes (Views/Home/Pacientes.cshtml):
+      - Ver/Listar: Lista de pacientes registrados.
+      - Agregar: Registra Nombre y Documento.
+      - Actualizar: Edita datos por ID.
+      - Eliminar: Elimina paciente por ID.
+
+   3. Citas Agregadas (Views/Home/CitasAgregadas.cshtml):
+      - Ver/Listar: Visualiza las citas activas.
+      - Agendar: Asigna Paciente, Médico, Fecha/Hora y Motivo.
+      - Actualizar: Modifica la fecha o motivo mediante el ID de la cita.
+      - Cancelar/Borrar: Remueve la cita activa.
+
+   4. Citas Canceladas (Views/Home/CitasCanceladas.cshtml):
+      - Historial independiente para almacenar las citas anuladas.
+
+
+--------------------------------------------------------------------
+4. MANTENIMIENTO Y COMANDOS ÚTILES
+--------------------------------------------------------------------
+
+* Detener la aplicación:
+  En la terminal de VS Code presionar: Ctrl + C
+
+* Actualizar cambios en la Base de Datos (Si cambias algún Modelo):
+  1. Crear nueva migración:
+     dotnet ef migrations add NombreDeLaMigracion
+  2. Aplicar cambios a MariaDB:
+     dotnet ef database update
+
+* Limpiar y restrusturar la compilación (en caso de errores de caché):
+  dotnet clean
+  dotnet build
+
+====================================================================
 
 [RNF-03] RENDIMIENTO Y ENRUTAMIENTO
 - Mapeo directo de rutas en el controlador ([Route]) para evitar errores 404.
