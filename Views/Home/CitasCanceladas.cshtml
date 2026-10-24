@@ -1,0 +1,115 @@
+@model IEnumerable<CitasMedicas.Models.Cita>
+
+@{
+    ViewData["Title"] = "Citas Canceladas";
+}
+
+<h2 class="mb-4">❌ Registro de Citas Canceladas</h2>
+
+<ul class="nav nav-tabs" id="citasCanceladasTab" role="tablist">
+    <li class="nav-item">
+        <button class="nav-link active" id="ver-cc-tab" data-bs-toggle="tab" data-bs-target="#ver-cc" type="button">🔍 Ver / Listar</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" id="agregar-cc-tab" data-bs-toggle="tab" data-bs-target="#agregar-cc" type="button">➕ Registrar Cancelación</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" id="actualizar-cc-tab" data-bs-toggle="tab" data-bs-target="#actualizar-cc" type="button">✏️ Actualizar Registro</button>
+    </li>
+    <li class="nav-item">
+        <button class="nav-link" id="borrar-cc-tab" data-bs-toggle="tab" data-bs-target="#borrar-cc" type="button">🗑️ Borrar Registro</button>
+    </li>
+</ul>
+
+<div class="tab-content border border-top-0 p-4 bg-white rounded-bottom" id="citasCanceladasTabContent">
+    
+    <!-- 1. VER / LISTAR CITAS CANCELADAS -->
+    <div class="tab-pane fade show active" id="ver-cc">
+        <h4>Historial de Cancelaciones</h4>
+        <table class="table table-striped table-hover mt-3">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Paciente</th>
+                    <th>Médico</th>
+                    <th>Fecha Original</th>
+                    <th>Motivo Cancelación</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var cita in Model)
+                    {
+                        <tr>
+                            <td>@cita.Id</td>
+                            <td>@cita.PacienteNombre</td>
+                            <td>@cita.MedicoNombre</td>
+                            <td>@cita.Fecha.ToString("g")</td>
+                            <td>@cita.Motivo</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">No hay registros de citas canceladas aún.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 2. FORMULARIO AGREGAR -->
+    <div class="tab-pane fade" id="agregar-cc">
+        <h4>Registrar Cita Cancelada</h4>
+        <form asp-action="AgregarCitaCancelada" method="post" class="mt-3">
+            <div class="mb-3">
+                <label class="form-label">Nombre del Paciente:</label>
+                <input type="text" name="pacienteNombre" class="form-control" placeholder="Ej: María López" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nombre del Médico:</label>
+                <input type="text" name="medicoNombre" class="form-control" placeholder="Ej: Dr. Juan Pérez" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Fecha Original:</label>
+                <input type="datetime-local" name="fecha" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Motivo de Cancelación:</label>
+                <input type="text" name="motivo" class="form-control" placeholder="Ej: Motivos personales" required />
+            </div>
+            <button type="submit" class="btn btn-primary">➕ Guardar Cancelación</button>
+        </form>
+    </div>
+
+    <!-- 3. FORMULARIO ACTUALIZAR -->
+    <div class="tab-pane fade" id="actualizar-cc">
+        <h4>Modificar Cita Cancelada</h4>
+        <form asp-action="ActualizarCitaCancelada" method="post" class="mt-3">
+            <div class="mb-3">
+                <label class="form-label">ID del Registro a Modificar:</label>
+                <input type="number" name="id" class="form-control" placeholder="Ingrese el ID" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nuevo Motivo de Cancelación:</label>
+                <input type="text" name="motivo" class="form-control" placeholder="Ingrese el nuevo motivo" required />
+            </div>
+            <button type="submit" class="btn btn-warning">✏️ Actualizar Registro</button>
+        </form>
+    </div>
+
+    <!-- 4. FORMULARIO BORRAR -->
+    <div class="tab-pane fade" id="borrar-cc">
+        <h4>Eliminar Registro</h4>
+        <form asp-action="BorrarCitaCancelada" method="post" class="mt-3">
+            <div class="mb-3">
+                <label class="form-label">ID del Registro a Eliminar:</label>
+                <input type="number" name="id" class="form-control" placeholder="Ingrese el ID del registro" required />
+            </div>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Confirma que desea eliminar este registro?');">🗑️ Eliminar Registro</button>
+        </form>
+    </div>
+
+</div>
