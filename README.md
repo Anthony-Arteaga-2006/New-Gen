@@ -34,11 +34,6 @@ Para ejecutar y desarrollar este proyecto necesitas:
   dotnet tool run dotnet-ef database update
 ```
 
-* Crear o verificar el proyecto (si fuera desde cero):
-```
-  dotnet new mvc -o CitasMedicas
-```
-
 * Agregar paquetes de la Base de Datos:
 ```
   dotnet add package Pomelo.EntityFrameworkCore.MySql
