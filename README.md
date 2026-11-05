@@ -28,9 +28,9 @@ Para ejecutar y desarrollar este proyecto necesitas:
 --------------------------------------------------------------------
 
 * Configurar Herramientas de Entity Framework (Especialmente con XAMPP / Entornos Locales):
-  dotnet new tool-manifest
-  dotnet tool install dotnet-ef
-  dotnet tool run dotnet-ef database update
+  >dotnet new tool-manifest
+  >dotnet tool install dotnet-ef
+  ?dotnet tool run dotnet-ef database update
 
 * Crear o verificar el proyecto (si fuera desde cero):
   dotnet new mvc -o CitasMedicas
@@ -40,7 +40,7 @@ Para ejecutar y desarrollar este proyecto necesitas:
   dotnet add package Microsoft.EntityFrameworkCore.Tools
 
 * Crear la estructura inicial de tablas (Migraciones):
-  dotnet ef migrations add InitialCreate
+  >dotnet ef migrations add InitialCreate
 
 * Aplicar y sincronizar las tablas con MariaDB/XAMPP:
   dotnet ef database update
