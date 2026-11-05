@@ -72,18 +72,21 @@ Para ejecutar y desarrollar este proyecto necesitas:
 3. CONFIGURACIÓN Y CONEXIÓN
 --------------------------------------------------------------------
 * Cadena de conexión en `appsettings.json` (Ajustado a XAMPP por defecto):
+```
   "ConnectionStrings": {
     "DefaultConnection": "Server=localhost;Database=CitasMedicasDb;User=root;Password=;"
   }
+```
 
 * Registro del servicio en `Program.cs`:
+```
   builder.Services.AddDbContext<ApplicationDbContext>(options =>
       options.UseMySql(
           builder.Configuration.GetConnectionString("DefaultConnection"),
           ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnection"))
       )
   );
-
+```
 
 --------------------------------------------------------------------
 4. GUÍA DE MANEJO DE LA APLICACIÓN
