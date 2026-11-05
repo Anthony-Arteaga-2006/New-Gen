@@ -28,33 +28,45 @@ Para ejecutar y desarrollar este proyecto necesitas:
 --------------------------------------------------------------------
 
 * Configurar Herramientas de Entity Framework (Especialmente con XAMPP / Entornos Locales):
-  >dotnet new tool-manifest
-  >dotnet tool install dotnet-ef
-  ?dotnet tool run dotnet-ef database update
+```
+  dotnet new tool-manifest
+  dotnet tool install dotnet-ef
+  dotnet tool run dotnet-ef database update
+```
 
 * Crear o verificar el proyecto (si fuera desde cero):
+```
   dotnet new mvc -o CitasMedicas
+```
 
 * Agregar paquetes de la Base de Datos:
+```
   dotnet add package Pomelo.EntityFrameworkCore.MySql
   dotnet add package Microsoft.EntityFrameworkCore.Tools
+```
 
 * Crear la estructura inicial de tablas (Migraciones):
-  >dotnet ef migrations add InitialCreate
+```
+  dotnet ef migrations add InitialCreate
+```
 
 * Aplicar y sincronizar las tablas con MariaDB/XAMPP:
-  dotnet ef database update
+ ``` 
+  otnet ef database update
+```
 
 * Iniciar y ejecutar la aplicación web:
+```
   dotnet run
-
+```
 * Detener la ejecución del servidor:
-  Ctrl + C
+  `Ctrl + C`
 
 * Limpiar y re-compilar el proyecto (en caso de errores de caché):
+```
   dotnet clean
   dotnet build
-
+```
 
 --------------------------------------------------------------------
 3. CONFIGURACIÓN Y CONEXIÓN
