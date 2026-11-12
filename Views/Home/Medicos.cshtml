@@ -56,18 +56,18 @@
             </tbody>
         </table>
     </div>
-
-    <!-- 2. FORMULARIO AGREGAR -->
+    
+<!-- 2. FORMULARIO AGREGAR -->
     <div class="tab-pane fade" id="agregar">
         <h4>Agregar Médico</h4>
-        <form asp-action="AgregarMedico" method="post" class="mt-3">
+        <form asp-controller="Medicos" asp-action="Create" method="post" class="mt-3">
             <div class="mb-3">
                 <label class="form-label">Nombre Completo:</label>
-                <input type="text" name="nombre" class="form-control" placeholder="Ej: Dr. Juan Pérez" required />
+                <input type="text" name="Nombre" class="form-control" placeholder="Ej: Dr. Juan Pérez" required />
             </div>
             <div class="mb-3">
                 <label class="form-label">Especialidad:</label>
-                <input type="text" name="especialidad" class="form-control" placeholder="Ej: Cardiología" required />
+                <input type="text" name="Especialidad" class="form-control" placeholder="Ej: Cardiología" required />
             </div>
             <button type="submit" class="btn btn-primary">➕ Registrar Médico</button>
         </form>
@@ -76,18 +76,18 @@
     <!-- 3. FORMULARIO ACTUALIZAR -->
     <div class="tab-pane fade" id="actualizar">
         <h4>Actualizar Médico</h4>
-        <form asp-action="ActualizarMedico" method="post" class="mt-3">
+        <form asp-controller="Medicos" asp-action="Edit" method="post" class="mt-3">
             <div class="mb-3">
                 <label class="form-label">ID del Médico a Modificar:</label>
                 <input type="number" name="id" class="form-control" placeholder="Ingrese el ID" required />
             </div>
             <div class="mb-3">
                 <label class="form-label">Nuevo Nombre:</label>
-                <input type="text" name="nombre" class="form-control" placeholder="Dejar en blanco para mantener el actual" />
+                <input type="text" name="Nombre" class="form-control" placeholder="Dejar en blanco para mantener el actual" />
             </div>
             <div class="mb-3">
                 <label class="form-label">Nueva Especialidad:</label>
-                <input type="text" name="especialidad" class="form-control" placeholder="Dejar en blanco para mantener la actual" />
+                <input type="text" name="Especialidad" class="form-control" placeholder="Dejar en blanco para mantener la actual" />
             </div>
             <button type="submit" class="btn btn-warning">✏️ Actualizar Datos</button>
         </form>
@@ -96,7 +96,7 @@
     <!-- 4. FORMULARIO BORRAR -->
     <div class="tab-pane fade" id="borrar">
         <h4>Borrar Médico</h4>
-        <form asp-action="BorrarMedico" method="post" class="mt-3">
+        <form asp-controller="Medicos" asp-action="Delete" method="post" class="mt-3">
             <div class="mb-3">
                 <label class="form-label">ID del Médico a Eliminar:</label>
                 <input type="number" name="id" class="form-control" placeholder="Ingrese el ID del médico" required />

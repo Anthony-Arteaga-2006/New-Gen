@@ -5,11 +5,11 @@ namespace CitasMedicas.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options){}
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         public DbSet<Medico> Medicos { get; set; }
         public DbSet<Paciente> Pacientes { get; set; }
-        public DbSet<Cita> CitasAgregadas { get; set; }
-        public DbSet<Cita> CitasCanceladas { get; set; }
+        public DbSet<CitaAgregada> CitasAgregadas { get; set; }
+        public DbSet<CitaCancelada> CitasCanceladas { get; set; }
     }
 }

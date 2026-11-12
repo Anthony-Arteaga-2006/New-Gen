@@ -1,4 +1,4 @@
-@model IEnumerable<CitasMedicas.Models.Cita>
+@model IEnumerable<CitasMedicas.Models.CitaCancelada>
 
 @{
     ViewData["Title"] = "Citas Canceladas";
@@ -43,10 +43,10 @@
                     {
                         <tr>
                             <td>@cita.Id</td>
-                            <td>@cita.PacienteNombre</td>
-                            <td>@cita.MedicoNombre</td>
-                            <td>@cita.Fecha.ToString("g")</td>
-                            <td>@cita.Motivo</td>
+                            <td>@cita.Paciente?.Nombre</td>
+                            <td>@cita.Medico?.Nombre</td>
+                            <td>@cita.FechaHoraOriginal</td>
+                            <td>@cita.MotivoCancelacion</td>
                         </tr>
                     }
                 }
@@ -59,26 +59,30 @@
             </tbody>
         </table>
     </div>
-
-    <!-- 2. FORMULARIO AGREGAR -->
+    
+<!-- 2. FORMULARIO AGREGAR -->
     <div class="tab-pane fade" id="agregar-cc">
         <h4>Registrar Cita Cancelada</h4>
-        <form asp-action="AgregarCitaCancelada" method="post" class="mt-3">
+        <form asp-controller="CitasCanceladas" asp-action="Create" method="post" class="mt-3">
             <div class="mb-3">
-                <label class="form-label">Nombre del Paciente:</label>
-                <input type="text" name="pacienteNombre" class="form-control" placeholder="Ej: María López" required />
+                <label class="form-label">Paciente:</label>
+                <select name="PacienteId" class="form-select" asp-items="ViewBag.Pacientes" required>
+                    <option value="">-- Seleccione un Paciente --</option>
+                </select>
             </div>
             <div class="mb-3">
-                <label class="form-label">Nombre del Médico:</label>
-                <input type="text" name="medicoNombre" class="form-control" placeholder="Ej: Dr. Juan Pérez" required />
+                <label class="form-label">Médico:</label>
+                <select name="MedicoId" class="form-select" asp-items="ViewBag.Medicos" required>
+                    <option value="">-- Seleccione un Médico --</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label class="form-label">Fecha Original:</label>
-                <input type="datetime-local" name="fecha" class="form-control" required />
+                <input type="datetime-local" name="FechaHoraOriginal" class="form-control" required />
             </div>
             <div class="mb-3">
                 <label class="form-label">Motivo de Cancelación:</label>
-                <input type="text" name="motivo" class="form-control" placeholder="Ej: Motivos personales" required />
+                <input type="text" name="Motivo" class="form-control" placeholder="Ej: Motivos personales" required />
             </div>
             <button type="submit" class="btn btn-primary">➕ Guardar Cancelación</button>
         </form>
@@ -87,14 +91,14 @@
     <!-- 3. FORMULARIO ACTUALIZAR -->
     <div class="tab-pane fade" id="actualizar-cc">
         <h4>Modificar Cita Cancelada</h4>
-        <form asp-action="ActualizarCitaCancelada" method="post" class="mt-3">
+        <form asp-controller="CitasCanceladas" asp-action="Edit" method="post" class="mt-3">
             <div class="mb-3">
                 <label class="form-label">ID del Registro a Modificar:</label>
                 <input type="number" name="id" class="form-control" placeholder="Ingrese el ID" required />
             </div>
             <div class="mb-3">
                 <label class="form-label">Nuevo Motivo de Cancelación:</label>
-                <input type="text" name="motivo" class="form-control" placeholder="Ingrese el nuevo motivo" required />
+                <input type="text" name="Motivo" class="form-control" placeholder="Ingrese el nuevo motivo" required />
             </div>
             <button type="submit" class="btn btn-warning">✏️ Actualizar Registro</button>
         </form>
@@ -103,7 +107,7 @@
     <!-- 4. FORMULARIO BORRAR -->
     <div class="tab-pane fade" id="borrar-cc">
         <h4>Eliminar Registro</h4>
-        <form asp-action="BorrarCitaCancelada" method="post" class="mt-3">
+        <form asp-controller="CitasCanceladas" asp-action="Delete" method="post" class="mt-3">
             <div class="mb-3">
                 <label class="form-label">ID del Registro a Eliminar:</label>
                 <input type="number" name="id" class="form-control" placeholder="Ingrese el ID del registro" required />

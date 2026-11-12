@@ -1,0 +1,86 @@
+@{
+    ViewData["Title"] = "Estadísticas del Sistema";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">📊 Estadísticas y Reportes Médicos</h2>
+
+    <!-- Tarjetas con los 5 indicadores estadísticos -->
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card border-primary h-100 shadow-sm">
+                <div class="card-header bg-primary text-white fw-bold">1. 🧑‍🤝‍🧑 Paciente Más Recurrente</div>
+                <div class="card-body">
+                    <h4 class="card-title">@ViewBag.PacienteRecurrente</h4>
+                    <p class="card-text text-muted">Total de citas registradas: <strong>@ViewBag.PacienteCantidad</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-success h-100 shadow-sm">
+                <div class="card-header bg-success text-white fw-bold">2. 👨‍⚕️ Médico con Mayor Demanda</div>
+                <div class="card-body">
+                    <h4 class="card-title">@ViewBag.MedicoTop</h4>
+                    <p class="card-text text-muted">Especialidad: @ViewBag.MedicoEspecialidad (<strong>@ViewBag.MedicoCantidad citas</strong>)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-info h-100 shadow-sm">
+                <div class="card-header bg-info text-dark fw-bold">3. 🏥 Especialidad Más Solicitada</div>
+                <div class="card-body">
+                    <h4 class="card-title">@ViewBag.EspecialidadTop</h4>
+                    <p class="card-text text-muted">Citas activas en esta área: <strong>@ViewBag.EspecialidadCantidad</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-warning h-100 shadow-sm">
+                <div class="card-header bg-warning text-dark fw-bold">4. 📈 Tasa de Citas Activas vs. Canceladas</div>
+                <div class="card-body">
+                    <p class="mb-1"><strong>Citas Activas:</strong> @ViewBag.TotalActivas (@ViewBag.PorcentajeActivas%)</p>
+                    <p class="mb-0"><strong>Citas Canceladas:</strong> @ViewBag.TotalCanceladas (@ViewBag.PorcentajeCanceladas%)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-danger h-100 shadow-sm">
+                <div class="card-header bg-danger text-white fw-bold">5. ❌ Motivo Principal de Cancelación</div>
+                <div class="card-body">
+                    <h5 class="card-title">@ViewBag.MotivoCancelacionTop</h5>
+                    <p class="card-text text-muted">Repeticiones: <strong>@ViewBag.MotivoCancelacionCantidad</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabla estadística detallada por médico -->
+    <h4 class="mt-4 mb-3">📋 Desglose Estadístico por Médico</h4>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Médico</th>
+                <th>Especialidad</th>
+                <th>Citas Activas</th>
+                <th>Citas Canceladas</th>
+                <th>Total Gestionadas</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.ResumenMedicos)
+            {
+                <tr>
+                    <td>@item.Nombre</td>
+                    <td>@item.Especialidad</td>
+                    <td>@item.Activas</td>
+                    <td>@item.Canceladas</td>
+                    <td><strong>@(item.Activas + item.Canceladas)</strong></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

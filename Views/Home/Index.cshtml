@@ -7,14 +7,14 @@
     <p class="lead text-muted">Gestión integral de médicos, pacientes y agenda de citas en un solo lugar.</p>
 </div>
 
-<div class="row mt-5 g-4 text-center">
+<div class="row mt-5 g-4 text-center justify-content-center">
     <div class="col-md-3">
         <div class="card h-100 shadow-sm border-0">
             <div class="card-body">
                 <div class="fs-1 mb-2">👨‍⚕️</div>
                 <h5 class="card-title">Médicos</h5>
                 <p class="card-text text-muted small">Administra el personal médico y especialidades.</p>
-                <a asp-controller="Home" asp-action="Medicos" class="btn btn-outline-primary btn-sm">Ir a Médicos</a>
+                <a asp-controller="Medicos" asp-action="Index" class="btn btn-outline-primary btn-sm">Ir a Médicos</a>
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@
                 <div class="fs-1 mb-2">🧑‍🤝‍🧑</div>
                 <h5 class="card-title">Pacientes</h5>
                 <p class="card-text text-muted small">Registro e historial de pacientes.</p>
-                <a asp-controller="Home" asp-action="Pacientes" class="btn btn-outline-primary btn-sm">Ir a Pacientes</a>
+                <a asp-controller="Pacientes" asp-action="Index" class="btn btn-outline-primary btn-sm">Ir a Pacientes</a>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
                 <div class="fs-1 mb-2">📅</div>
                 <h5 class="card-title">Citas Agregadas</h5>
                 <p class="card-text text-muted small">Agenda y programación de consultas.</p>
-                <a asp-controller="Home" asp-action="CitasAgregadas" class="btn btn-outline-primary btn-sm">Ver Agendadas</a>
+                <a asp-controller="CitasAgregadas" asp-action="Index" class="btn btn-outline-primary btn-sm">Ver Agendadas</a>
             </div>
         </div>
     </div>
@@ -44,7 +44,17 @@
                 <div class="fs-1 mb-2">❌</div>
                 <h5 class="card-title">Citas Canceladas</h5>
                 <p class="card-text text-muted small">Consulta de citas anuladas o reprogramadas.</p>
-                <a asp-controller="Home" asp-action="CitasCanceladas" class="btn btn-outline-primary btn-sm">Ver Canceladas</a>
+                <a asp-controller="CitasCanceladas" asp-action="Index" class="btn btn-outline-primary btn-sm">Ver Canceladas</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+                <div class="fs-1 mb-2">📊</div>
+                <h5 class="card-title">Estadísticas</h5>
+                <p class="card-text text-muted small">Reportes de demanda, pacientes recurrentes y cancelaciones.</p>
+                <a asp-controller="Estadisticas" asp-action="Index" class="btn btn-outline-primary btn-sm">Ver Estadísticas</a>
             </div>
         </div>
     </div>

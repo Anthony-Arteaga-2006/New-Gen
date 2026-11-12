@@ -1,4 +1,4 @@
-namespace CitasMEdicas.Models;
+namespace CitasMedicas.Models;
 
 public class ErrorViewModel
 {

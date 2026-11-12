@@ -7,7 +7,7 @@
     <script type="importmap"></script>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/CitasMEdicas.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CitasMedicas.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -24,16 +24,19 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Medicos">👨‍⚕️ Médicos</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Medicos" asp-action="Index">👨‍⚕️ Médicos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Pacientes">🧑‍🤝‍🧑 Pacientes</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Pacientes" asp-action="Index">🧑‍🤝‍🧑 Pacientes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CitasAgregadas">📅 Citas Agregadas</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CitasAgregadas" asp-action="Index">📅 Citas Agregadas</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="CitasCanceladas">❌ Citas Canceladas</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="CitasCanceladas" asp-action="Index">❌ Citas Canceladas</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark fw-bold" asp-area="" asp-controller="Estadisticas" asp-action="Index">📊 Estadísticas</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
