@@ -14,8 +14,7 @@ Para ejecutar y desarrollar este proyecto necesitas:
   - Visual Studio Code (con extensiones de C# y C# Dev Kit).
 
 * Base de Datos y Servidor:
-  - MariaDB Server / MySQL (a través de XAMPP u otro servicio local).
-  - Servicio de MySQL activo en el puerto local 3306.
+  - MariaDB Server (a través de XAMPP u otro servicio local).
 
 * Paquetes de NuGet instalados:
   - Microsoft.EntityFrameworkCore
@@ -47,7 +46,7 @@ Para ejecutar y desarrollar este proyecto necesitas:
 
 * Aplicar y sincronizar las tablas con MariaDB/XAMPP:
  ``` 
-  otnet ef database update
+  dotnet ef database update
 ```
 
 * Iniciar y ejecutar la aplicación web:
