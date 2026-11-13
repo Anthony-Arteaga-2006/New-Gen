@@ -45,7 +45,7 @@ CREATE TABLE `citascanceladas` (
 
 
 -- 1. INSERTAR 10 MÉDICOS
-INSERT INTO Medicos (Nombre, Especialidad) VALUES 
+INSERT INTO medicos (Nombre, Especialidad) VALUES 
 ('Dr. Carlos Mendoza', 'Cardiología'),
 ('Dra. Elena Ríos', 'Pediatría'),
 ('Dr. Andrés Salazar', 'Medicina General'),
@@ -58,7 +58,7 @@ INSERT INTO Medicos (Nombre, Especialidad) VALUES
 ('Dra. Valeria Paredes', 'Endocrinología');
 
 -- 2. INSERTAR 10 PACIENTES
-INSERT INTO Pacientes (Nombre, Documento) VALUES 
+INSERT INTO pacientes (Nombre, Documento) VALUES 
 ('María Fernanda López', '8451236'),
 ('Jorge Luis Quispe', '7912345'),
 ('Ana Sofía Vargas', '9123487'),
@@ -71,7 +71,7 @@ INSERT INTO Pacientes (Nombre, Documento) VALUES
 ('Mateo Nicolás Zeballos', '8912345');
 
 -- 3. INSERTAR 10 CITAS AGREGADAS (Activas)
-INSERT INTO CitasAgregadas (PacienteId, MedicoId, FechaHora, Motivo, Estado) VALUES 
+INSERT INTO citasAgregadas (PacienteId, MedicoId, FechaHora, Motivo, Estado) VALUES 
 ((SELECT Id FROM Pacientes LIMIT 1 OFFSET 0), (SELECT Id FROM Medicos LIMIT 1 OFFSET 0), '2026-11-15 08:30:00', 'Control de presión arterial', 'Pendiente'),
 ((SELECT Id FROM Pacientes LIMIT 1 OFFSET 1), (SELECT Id FROM Medicos LIMIT 1 OFFSET 1), '2026-11-15 09:30:00', 'Chequeo pediátrico general', 'Pendiente'),
 ((SELECT Id FROM Pacientes LIMIT 1 OFFSET 2), (SELECT Id FROM Medicos LIMIT 1 OFFSET 2), '2026-11-16 10:00:00', 'Consulta médica de rutina', 'Pendiente'),
@@ -84,7 +84,7 @@ INSERT INTO CitasAgregadas (PacienteId, MedicoId, FechaHora, Motivo, Estado) VAL
 ((SELECT Id FROM Pacientes LIMIT 1 OFFSET 9), (SELECT Id FROM Medicos LIMIT 1 OFFSET 9), '2026-11-20 08:45:00', 'Control de tiroides', 'Pendiente');
 
 -- 4. INSERTAR 10 CITAS CANCELADAS
-INSERT INTO CitasCanceladas (PacienteId, MedicoId, FechaHoraOriginal, FechaCancelacion, MotivoCancelacion) VALUES 
+INSERT INTO citasCanceladas (PacienteId, MedicoId, FechaHoraOriginal, FechaCancelacion, MotivoCancelacion) VALUES 
 ((SELECT Id FROM Pacientes LIMIT 1 OFFSET 0), (SELECT Id FROM Medicos LIMIT 1 OFFSET 1), '2026-11-01 09:00:00', '2026-10-31 17:20:00', 'El paciente reprogramó por viaje'),
 ((SELECT Id FROM Pacientes LIMIT 1 OFFSET 1), (SELECT Id FROM Medicos LIMIT 1 OFFSET 2), '2026-11-02 10:30:00', '2026-11-02 08:10:00', 'Inconveniente laboral de última hora'),
 ((SELECT Id FROM Pacientes LIMIT 1 OFFSET 2), (SELECT Id FROM Medicos LIMIT 1 OFFSET 3), '2026-11-03 11:00:00', '2026-11-02 19:00:00', 'Cruce de horarios con estudio'),
