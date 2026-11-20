@@ -15,6 +15,7 @@ Para ejecutar y desarrollar este proyecto necesitas:
 
 * Base de Datos y Servidor:
   - MariaDB Server (a través de XAMPP u otro servicio local).
+  - Si ya esta en la nube, la base de datos se vera desde cualquier equipo.
 
 * Paquetes de NuGet instalados:
   - Microsoft.EntityFrameworkCore
@@ -65,10 +66,10 @@ Para ejecutar y desarrollar este proyecto necesitas:
 --------------------------------------------------------------------
 3. CONFIGURACIÓN Y CONEXIÓN
 --------------------------------------------------------------------
-* Cadena de conexión en `appsettings.json` (Ajustado a XAMPP por defecto):
+* Cadena de conexión en `appsettings.json` (Se conecta directo a la nube):
 ```
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=CitasMedicasDb;User=root;Password=;"
+    "MariaDbConnection": "Server=mysql-16ffea89-unifranz-0962.h.aivencloud.com;Port=11774;Database=citas_medicas_db;User=avnadmin;Password=AVNS_ITuB9UTSYHy4XVzBer6;"
   }
 ```
 
@@ -86,7 +87,7 @@ Para ejecutar y desarrollar este proyecto necesitas:
 4. GUÍA DE MANEJO DE LA APLICACIÓN
 --------------------------------------------------------------------
 
-1. Asegúrate de iniciar los servicios de MySQL / MariaDB en el panel de control de XAMPP.
+1. Asegúrate de iniciar los servicios de MySQL / MariaDB pero antes mirar si el aiven esta encendido.
 2. Ejecutar el proyecto con `dotnet run` y abrir la URL indicada (ej. http://localhost:5000).
 
 3. Módulos integrados con persistencia en MariaDB:
