@@ -68,8 +68,9 @@ Para ejecutar y desarrollar este proyecto necesitas:
 --------------------------------------------------------------------
 * Cadena de conexión en `appsettings.json` (Se conecta directo a la nube):
 ```
+ {
   "ConnectionStrings": {
-    "MariaDbConnection": "Server=mysql-16ffea89-unifranz-0962.h.aivencloud.com;Port=11774;Database=citas_medicas_db;User=avnadmin;Password=AVNS_ITuB9UTSYHy4XVzBer6;"
+    "MariaDbConnection": "Server=TU_SERVIDOR;Port=TU_PUERTO;Database=citas_medicas_db;User=TU_USUARIO;Password=TU_CONTRASEÑA;"
   }
 ```
 
