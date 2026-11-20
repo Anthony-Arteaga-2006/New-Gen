@@ -103,19 +103,26 @@ Para ejecutar y desarrollar este proyecto necesitas:
 5. BASE DE DATOS EN LA NUBE
 --------------------------------------------------------------------
 *El proyecto utiliza MariaDB alojado en Aiven Cloud para centralizar el almacenamiento de información.
+
 *Esto permite:
+
     - Acceder a la base de datos desde diferentes equipos.
     - Mantener la información centralizada.
     - Evitar instalar el servidor MariaDB en cada equipo cliente.
+    
 *La conexión requiere las credenciales correctas y la configuración de seguridad correspondiente, incluyendo SSL/TLS cuando sea necesario.
 
 --------------------------------------------------------------------
 6. SEGURIDAD
 --------------------------------------------------------------------
 -No compartir las contraseñas de la base de datos.
+
 -No publicar credenciales en GitHub.
+
 -Utilizar variables de entorno o User Secrets para almacenar información sensible.
+
 -Realizar copias de seguridad periódicas de la base de datos.
+
  
 
 ====================================================================
