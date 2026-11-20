@@ -15,7 +15,7 @@ Para ejecutar y desarrollar este proyecto necesitas:
 
 * Base de Datos y Servidor:
   - MariaDB Server (a través de XAMPP u otro servicio local).
-  - Si ya esta en la nube, la base de datos se vera desde cualquier equipo.
+  - Aiven Cloud (para alojar la base de datos en la nube).
 
 * Paquetes de NuGet instalados:
   - Microsoft.EntityFrameworkCore
@@ -73,6 +73,7 @@ Para ejecutar y desarrollar este proyecto necesitas:
     "MariaDbConnection": "Server=TU_SERVIDOR;Port=TU_PUERTO;Database=citas_medicas_db;User=TU_USUARIO;Password=TU_CONTRASEÑA;"
   }
 ```
+*Importante: Reemplazar los datos de ejemplo por las credenciales correspondientes. No publicar contraseñas reales en repositorios.
 
 * Registro del servicio en `Program.cs`:
 ```
@@ -88,13 +89,33 @@ Para ejecutar y desarrollar este proyecto necesitas:
 4. GUÍA DE MANEJO DE LA APLICACIÓN
 --------------------------------------------------------------------
 
-1. Asegúrate de iniciar los servicios de MySQL / MariaDB pero antes mirar si el aiven esta encendido.
-2. Ejecutar el proyecto con `dotnet run` y abrir la URL indicada (ej. http://localhost:5000).
+1. Verificar que el servidor MariaDB esté disponible.
+2. Si se utiliza Aiven Cloud, comprobar que el servicio esté activo y permita conexiones externas.
+3. Ejecutar el proyecto con `dotnet run` y abrir la URL indicada (ej. http://localhost:5000).
 
-3. Módulos integrados con persistencia en MariaDB:
+4. Módulos integrados con persistencia en MariaDB:
    - Médicos: Registrar, listar, actualizar e ID de médicos.
    - Pacientes: Administrar nombre y documento de pacientes.
    - Citas Agregadas: Agendar citas asociando médicos, pacientes, fechas y motivos.
    - Citas Canceladas: Control de historial para registros anulados.
+
+--------------------------------------------------------------------
+5. BASE DE DATOS EN LA NUBE
+--------------------------------------------------------------------
+*El proyecto utiliza MariaDB alojado en Aiven Cloud para centralizar el almacenamiento de información.
+*Esto permite:
+    - Acceder a la base de datos desde diferentes equipos.
+    - Mantener la información centralizada.
+    - Evitar instalar el servidor MariaDB en cada equipo cliente.
+*La conexión requiere las credenciales correctas y la configuración de seguridad correspondiente, incluyendo SSL/TLS cuando sea necesario.
+
+--------------------------------------------------------------------
+6. SEGURIDAD
+--------------------------------------------------------------------
+-No compartir las contraseñas de la base de datos.
+-No publicar credenciales en GitHub.
+-Utilizar variables de entorno o User Secrets para almacenar información sensible.
+-Realizar copias de seguridad periódicas de la base de datos.
+ 
 
 ====================================================================
