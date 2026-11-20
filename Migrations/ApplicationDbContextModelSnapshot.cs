@@ -22,7 +22,7 @@ namespace CitasMEdicas.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("CitasMedicas.Models.CitaAgregada", b =>
+            modelBuilder.Entity("CitasMedicas.Models.Cita", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -41,6 +41,7 @@ namespace CitasMEdicas.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Motivo")
+                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("PacienteId")
@@ -52,39 +53,9 @@ namespace CitasMEdicas.Migrations
 
                     b.HasIndex("PacienteId");
 
-                    b.ToTable("citasagregadas");
-                });
+                    b.ToTable("citas", (string)null);
 
-            modelBuilder.Entity("CitasMedicas.Models.CitaCancelada", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("FechaCancelacion")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("FechaHoraOriginal")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("MedicoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MotivoCancelacion")
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("PacienteId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MedicoId");
-
-                    b.HasIndex("PacienteId");
-
-                    b.ToTable("citascanceladas");
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("CitasMedicas.Models.Medico", b =>
@@ -131,6 +102,29 @@ namespace CitasMEdicas.Migrations
 
             modelBuilder.Entity("CitasMedicas.Models.CitaAgregada", b =>
                 {
+                    b.HasBaseType("CitasMedicas.Models.Cita");
+
+                    b.ToTable("citasagregadas", (string)null);
+                });
+
+            modelBuilder.Entity("CitasMedicas.Models.CitaCancelada", b =>
+                {
+                    b.HasBaseType("CitasMedicas.Models.Cita");
+
+                    b.Property<DateTime>("FechaCancelacion")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("FechaHoraOriginal")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("MotivoCancelacion")
+                        .HasColumnType("longtext");
+
+                    b.ToTable("citascanceladas", (string)null);
+                });
+
+            modelBuilder.Entity("CitasMedicas.Models.Cita", b =>
+                {
                     b.HasOne("CitasMedicas.Models.Medico", "Medico")
                         .WithMany()
                         .HasForeignKey("MedicoId")
@@ -148,23 +142,22 @@ namespace CitasMEdicas.Migrations
                     b.Navigation("Paciente");
                 });
 
+            modelBuilder.Entity("CitasMedicas.Models.CitaAgregada", b =>
+                {
+                    b.HasOne("CitasMedicas.Models.Cita", null)
+                        .WithOne()
+                        .HasForeignKey("CitasMedicas.Models.CitaAgregada", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CitasMedicas.Models.CitaCancelada", b =>
                 {
-                    b.HasOne("CitasMedicas.Models.Medico", "Medico")
-                        .WithMany()
-                        .HasForeignKey("MedicoId")
+                    b.HasOne("CitasMedicas.Models.Cita", null)
+                        .WithOne()
+                        .HasForeignKey("CitasMedicas.Models.CitaCancelada", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("CitasMedicas.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("PacienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Medico");
-
-                    b.Navigation("Paciente");
                 });
 #pragma warning restore 612, 618
         }
