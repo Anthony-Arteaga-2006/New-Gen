@@ -13,6 +13,8 @@ namespace CitasMedicas.Data
         public DbSet<CitaAgregada> CitasAgregadas { get; set; }
         public DbSet<CitaCancelada> CitasCanceladas { get; set; }
 
+        public DbSet<Historial> Historial { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -21,6 +23,7 @@ namespace CitasMedicas.Data
             modelBuilder.Entity<Cita>().ToTable("citas");
             modelBuilder.Entity<CitaAgregada>().ToTable("citasagregadas");
             modelBuilder.Entity<CitaCancelada>().ToTable("citascanceladas");
+            modelBuilder.Entity<Historial>().ToTable("Historial");
         }
     }
 }

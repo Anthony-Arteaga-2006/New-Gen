@@ -1,6 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using CitasMedicas.Data;
 using CitasMedicas.Models;
 
@@ -15,37 +13,10 @@ namespace CitasMedicas.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        // Redirige a la vista única de Citas
+        public IActionResult Index()
         {
-            ViewBag.Pacientes = new SelectList(_context.Pacientes, "Id", "Nombre");
-            ViewBag.Medicos = new SelectList(_context.Medicos, "Id", "Nombre");
-
-            var citasCanceladas = await _context.CitasCanceladas
-                .Include(c => c.Paciente)
-                .Include(c => c.Medico)
-                .ToListAsync();
-
-            return View("~/Views/Home/CitasCanceladas.cshtml", citasCanceladas);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int PacienteId, int MedicoId, DateTime FechaHoraOriginal, string Motivo)
-        {
-            if (PacienteId > 0 && MedicoId > 0 && !string.IsNullOrWhiteSpace(Motivo))
-            {
-                var citaCancelada = new CitaCancelada
-                {
-                    PacienteId = PacienteId,
-                    MedicoId = MedicoId,
-                    FechaHoraOriginal = FechaHoraOriginal,
-                    FechaCancelacion = DateTime.Now,
-                    MotivoCancelacion = Motivo
-                };
-                _context.CitasCanceladas.Add(citaCancelada);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "CitasAgregadas");
         }
 
         [HttpPost]
@@ -56,9 +27,18 @@ namespace CitasMedicas.Controllers
             if (citaCancelada != null && !string.IsNullOrWhiteSpace(Motivo))
             {
                 citaCancelada.MotivoCancelacion = Motivo;
+
+                _context.Historial.Add(new Historial
+                {
+                    CitaId = citaCancelada.Id,
+                    Accion = "Motivo Actualizado",
+                    Detalle = $"Se actualizó el motivo de cancelación: {Motivo}",
+                    FechaRegistro = DateTime.Now
+                });
+
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "CitasAgregadas");
         }
 
         [HttpPost]
@@ -71,7 +51,7 @@ namespace CitasMedicas.Controllers
                 _context.CitasCanceladas.Remove(citaCancelada);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "CitasAgregadas");
         }
     }
 }

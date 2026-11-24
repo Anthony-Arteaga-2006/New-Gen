@@ -54,6 +54,17 @@ CREATE TABLE `citascanceladas` (
     CONSTRAINT `FK_citascanceladas_citas_Id` FOREIGN KEY (`Id`) REFERENCES `citas` (`Id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Tabla Historial (vinculada a la tabla padre citas)
+CREATE TABLE `Historial` (
+    `Id` INT NOT NULL AUTO_INCREMENT,
+    `CitaId` INT NOT NULL,
+    `Accion` VARCHAR(50) NOT NULL,
+    `Detalle` LONGTEXT NOT NULL,
+    `FechaRegistro` DATETIME(6) NOT NULL,
+    CONSTRAINT `PK_Historial` PRIMARY KEY (`Id`),
+    CONSTRAINT `FK_Historial_citas_CitaId` FOREIGN KEY (`CitaId`) REFERENCES `citas` (`Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Tabla de historial de migraciones de Entity Framework Core
 CREATE TABLE `__EFMigrationsHistory` (
     `MigrationId` VARCHAR(150) NOT NULL,
