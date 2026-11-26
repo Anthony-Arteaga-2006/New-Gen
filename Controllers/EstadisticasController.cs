@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CitasMedicas.Data;
+using CitasMedicas.Models;
 
 namespace CitasMedicas.Controllers
 {
@@ -15,29 +16,24 @@ namespace CitasMedicas.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var citasAgregadas = await _context.CitasAgregadas
+            var todasLasCitas = await _context.Citas
                 .Include(c => c.Paciente)
                 .Include(c => c.Medico)
                 .ToListAsync();
 
-            var citasCanceladas = await _context.CitasCanceladas
-                .Include(c => c.Paciente)
-                .Include(c => c.Medico)
-                .ToListAsync();
+            var citasActivas = todasLasCitas.Where(c => c.Estado == EstadoCita.Activa).ToList();
+            var citasCanceladas = todasLasCitas.Where(c => c.Estado == EstadoCita.Cancelada).ToList();
 
-            // 1. Paciente más recurrente
-            var todosPacientesIds = citasAgregadas.Select(c => c.PacienteId)
-                .Concat(citasCanceladas.Select(c => c.PacienteId));
-
-            var topPacienteGrupo = todosPacientesIds
-                .GroupBy(id => id)
+            // 1. Paciente más recurrente (tomando en cuenta todo su historial)
+            var topPacienteGrupo = todasLasCitas
+                .GroupBy(c => c.PacienteId)
                 .OrderByDescending(g => g.Count())
                 .FirstOrDefault();
 
             if (topPacienteGrupo != null)
             {
-                var paciente = await _context.Pacientes.FindAsync(topPacienteGrupo.Key);
-                ViewBag.PacienteRecurrente = paciente?.Nombre ?? "Sin datos";
+                var paciente = topPacienteGrupo.First().Paciente;
+                ViewBag.PacienteRecurrente = paciente?.NombreCompleto ?? "Sin datos";
                 ViewBag.PacienteCantidad = topPacienteGrupo.Count();
             }
             else
@@ -46,8 +42,8 @@ namespace CitasMedicas.Controllers
                 ViewBag.PacienteCantidad = 0;
             }
 
-            // 2. Médico con mayor demanda
-            var topMedicoGrupo = citasAgregadas
+            // 2. Médico con mayor demanda (citas activas)
+            var topMedicoGrupo = citasActivas
                 .GroupBy(c => c.MedicoId)
                 .OrderByDescending(g => g.Count())
                 .FirstOrDefault();
@@ -55,7 +51,7 @@ namespace CitasMedicas.Controllers
             if (topMedicoGrupo != null)
             {
                 var medico = topMedicoGrupo.First().Medico;
-                ViewBag.MedicoTop = medico?.Nombre ?? "Sin datos";
+                ViewBag.MedicoTop = medico?.NombreCompleto ?? "Sin datos";
                 ViewBag.MedicoEspecialidad = medico?.Especialidad ?? "";
                 ViewBag.MedicoCantidad = topMedicoGrupo.Count();
             }
@@ -67,7 +63,7 @@ namespace CitasMedicas.Controllers
             }
 
             // 3. Especialidad más solicitada
-            var topEspecialidad = citasAgregadas
+            var topEspecialidad = citasActivas
                 .Where(c => c.Medico != null)
                 .GroupBy(c => c.Medico!.Especialidad)
                 .OrderByDescending(g => g.Count())
@@ -77,9 +73,9 @@ namespace CitasMedicas.Controllers
             ViewBag.EspecialidadCantidad = topEspecialidad?.Count() ?? 0;
 
             // 4. Tasa de Citas Activas vs Canceladas
-            int totalActivas = citasAgregadas.Count;
+            int totalActivas = citasActivas.Count;
             int totalCanceladas = citasCanceladas.Count;
-            int totalGeneral = totalActivas + totalCanceladas;
+            int totalGeneral = todasLasCitas.Count;
 
             ViewBag.TotalActivas = totalActivas;
             ViewBag.TotalCanceladas = totalCanceladas;
@@ -100,10 +96,10 @@ namespace CitasMedicas.Controllers
             ViewBag.ResumenMedicos = await _context.Medicos
                 .Select(m => new
                 {
-                    Nombre = m.Nombre,
+                    Nombre = m.Nombres + " " + m.Apellidos,
                     Especialidad = m.Especialidad,
-                    Activas = _context.CitasAgregadas.Count(c => c.MedicoId == m.Id),
-                    Canceladas = _context.CitasCanceladas.Count(c => c.MedicoId == m.Id)
+                    Activas = _context.Citas.Count(c => c.MedicoId == m.Id && c.Estado == EstadoCita.Activa),
+                    Canceladas = _context.Citas.Count(c => c.MedicoId == m.Id && c.Estado == EstadoCita.Cancelada)
                 })
                 .ToListAsync();
 

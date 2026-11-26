@@ -21,31 +21,48 @@ namespace CitasMedicas.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(string Nombre, string Especialidad)
+        public async Task<IActionResult> Create(string Nombres, string Apellidos, string CI, string Especialidad, string Telefono)
         {
-            if (!string.IsNullOrWhiteSpace(Nombre) && !string.IsNullOrWhiteSpace(Especialidad))
+            if (!string.IsNullOrWhiteSpace(Nombres) &&
+                !string.IsNullOrWhiteSpace(Apellidos) &&
+                !string.IsNullOrWhiteSpace(CI) &&
+                !string.IsNullOrWhiteSpace(Especialidad) &&
+                !string.IsNullOrWhiteSpace(Telefono))
             {
-                var medico = new Medico
+                bool existeCI = await _context.Medicos.AnyAsync(m => m.CI == CI.Trim());
+                if (!existeCI)
                 {
-                    Nombre = Nombre,
-                    Especialidad = Especialidad
-                };
-                _context.Medicos.Add(medico);
-                await _context.SaveChangesAsync();
+                    var medico = new Medico
+                    {
+                        Nombres = Nombres.Trim(),
+                        Apellidos = Apellidos.Trim(),
+                        CI = CI.Trim(),
+                        Especialidad = Especialidad.Trim(),
+                        Telefono = Telefono.Trim()
+                    };
+                    _context.Medicos.Add(medico);
+                    await _context.SaveChangesAsync();
+                }
             }
             return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, string? Nombre, string? Especialidad)
+        public async Task<IActionResult> Edit(int id, string? Nombres, string? Apellidos, string? CI, string? Especialidad, string? Telefono)
         {
             var medico = await _context.Medicos.FindAsync(id);
             if (medico != null)
             {
-                if (!string.IsNullOrWhiteSpace(Nombre))
-                    medico.Nombre = Nombre;
+                if (!string.IsNullOrWhiteSpace(Nombres))
+                    medico.Nombres = Nombres.Trim();
+                if (!string.IsNullOrWhiteSpace(Apellidos))
+                    medico.Apellidos = Apellidos.Trim();
+                if (!string.IsNullOrWhiteSpace(CI))
+                    medico.CI = CI.Trim();
                 if (!string.IsNullOrWhiteSpace(Especialidad))
-                    medico.Especialidad = Especialidad;
+                    medico.Especialidad = Especialidad.Trim();
+                if (!string.IsNullOrWhiteSpace(Telefono))
+                    medico.Telefono = Telefono.Trim();
 
                 await _context.SaveChangesAsync();
             }

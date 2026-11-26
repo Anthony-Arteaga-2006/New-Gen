@@ -1,0 +1,90 @@
+@model IEnumerable<CitasMedicas.Models.Cita>
+
+@{
+    ViewData["Title"] = "Citas Canceladas";
+    var historial = ViewBag.Historial as IEnumerable<CitasMedicas.Models.Historial> ?? Enumerable.Empty<CitasMedicas.Models.Historial>();
+}
+
+<h2 class="mb-4">🚫 Registro de Citas Canceladas</h2>
+
+<div class="card shadow-sm mb-5">
+    <div class="card-body">
+        <table class="table table-striped table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Estado</th>
+                    <th>Paciente</th>
+                    <th>Médico</th>
+                    <th>Fecha Programada</th>
+                    <th>Fecha Cancelación</th>
+                    <th>Motivo de Cancelación</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var cita in Model)
+                    {
+                        <tr>
+                            <td>@cita.Id</td>
+                            <td><span class="badge bg-danger">@cita.Estado</span></td>
+                            <td>@cita.Paciente?.NombreCompleto</td>
+                            <td>@cita.Medico?.NombreCompleto</td>
+                            <td>@cita.FechaHora.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@cita.FechaCancelacion?.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                <strong>@cita.MotivoCancelacion</strong>
+                                <small class="text-muted d-block">(Motivo original: @cita.Motivo)</small>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7" class="text-center text-muted">No hay citas canceladas registradas.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h4 class="mb-3">📜 Historial de Movimientos</h4>
+<table class="table table-sm table-bordered table-hover bg-white">
+    <thead class="table-secondary">
+        <tr>
+            <th>Cita ID</th>
+            <th>Paciente</th>
+            <th>Acción</th>
+            <th>Detalle</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (historial.Any())
+        {
+            @foreach (var h in historial)
+            {
+                <tr>
+                    <td>#@h.CitaId</td>
+                    <td>@h.Cita?.Paciente?.NombreCompleto</td>
+                    <td>
+                        <span class="badge @(h.Accion == "Cancelada" ? "bg-danger" : "bg-info text-dark")">
+                            @h.Accion
+                        </span>
+                    </td>
+                    <td>@h.Detalle</td>
+                    <td>@h.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" class="text-center text-muted">Sin movimientos registrados aún.</td>
+            </tr>
+        }
+    </tbody>
+</table>

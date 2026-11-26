@@ -19,8 +19,8 @@ namespace CitasMedicas.Controllers
         {
             ViewBag.TotalMedicos = await _context.Medicos.CountAsync();
             ViewBag.TotalPacientes = await _context.Pacientes.CountAsync();
-            ViewBag.TotalCitasAgregadas = await _context.CitasAgregadas.CountAsync();
-            ViewBag.TotalCitasCanceladas = await _context.CitasCanceladas.CountAsync();
+            ViewBag.TotalCitasAgregadas = await _context.Citas.CountAsync(c => c.Estado == EstadoCita.Activa);
+            ViewBag.TotalCitasCanceladas = await _context.Citas.CountAsync(c => c.Estado == EstadoCita.Cancelada);
 
             return View();
         }

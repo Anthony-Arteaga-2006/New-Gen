@@ -4,104 +4,140 @@
     ViewData["Title"] = "Gestión de Médicos";
 }
 
-<h2 class="mb-4">👨‍⚕️ Gestión de Médicos</h2>
+<h2 class="mb-4">🩺 Gestión de Médicos</h2>
 
-<!-- Pestañas (Ver, Agregar, Actualizar, Borrar) -->
 <ul class="nav nav-tabs" id="medicosTab" role="tablist">
     <li class="nav-item">
-        <button class="nav-link active" id="ver-tab" data-bs-toggle="tab" data-bs-target="#ver" type="button">🔍 Ver / Listar</button>
+        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ver-medicos" type="button">🔍 Ver / Listar</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link" id="agregar-tab" data-bs-toggle="tab" data-bs-target="#agregar" type="button">➕ Agregar</button>
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#agregar-medico" type="button">➕ Agregar</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link" id="actualizar-tab" data-bs-toggle="tab" data-bs-target="#actualizar" type="button">✏️ Actualizar</button>
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#actualizar-medico" type="button">✏️ Actualizar</button>
     </li>
     <li class="nav-item">
-        <button class="nav-link" id="borrar-tab" data-bs-toggle="tab" data-bs-target="#borrar" type="button">🗑️ Borrar</button>
+        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#eliminar-medico" type="button">🗑️ Eliminar</button>
     </li>
 </ul>
 
-<div class="tab-content border border-top-0 p-4 bg-white rounded-bottom" id="medicosTabContent">
-    
-    <!-- 1. VER / LISTAR MÉDICOS -->
-    <div class="tab-pane fade show active" id="ver">
-        <h4>Lista de Médicos</h4>
-        <table class="table table-striped table-hover mt-3">
+<div class="tab-content border border-top-0 p-4 bg-white rounded-bottom">
+
+    <!-- 1. LISTAR MÉDICOS -->
+    <div class="tab-pane fade show active" id="ver-medicos">
+        <table class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>CI</th>
                     <th>Especialidad</th>
+                    <th>Teléfono</th>
                 </tr>
             </thead>
             <tbody>
                 @if (Model != null && Model.Any())
                 {
-                    @foreach (var medico in Model)
+                    @foreach (var m in Model)
                     {
                         <tr>
-                            <td>@medico.Id</td>
-                            <td>@medico.Nombre</td>
-                            <td>@medico.Especialidad</td>
+                            <td>@m.Id</td>
+                            <td>@m.Nombres</td>
+                            <td>@m.Apellidos</td>
+                            <td>@m.CI</td>
+                            <td><span class="badge bg-primary">@m.Especialidad</span></td>
+                            <td>@m.Telefono</td>
                         </tr>
                     }
                 }
                 else
                 {
                     <tr>
-                        <td colspan="3" class="text-center text-muted">No hay médicos registrados aún.</td>
+                        <td colspan="6" class="text-center text-muted">No hay médicos registrados.</td>
                     </tr>
                 }
             </tbody>
         </table>
     </div>
-    
-<!-- 2. FORMULARIO AGREGAR -->
-    <div class="tab-pane fade" id="agregar">
-        <h4>Agregar Médico</h4>
+
+    <!-- 2. AGREGAR MÉDICO -->
+    <div class="tab-pane fade" id="agregar-medico">
+        <h4>Registrar Nuevo Médico</h4>
         <form asp-controller="Medicos" asp-action="Create" method="post" class="mt-3">
-            <div class="mb-3">
-                <label class="form-label">Nombre Completo:</label>
-                <input type="text" name="Nombre" class="form-control" placeholder="Ej: Dr. Juan Pérez" required />
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Nombres:</label>
+                    <input type="text" name="Nombres" class="form-control" placeholder="Ej: Carlos" required />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Apellidos:</label>
+                    <input type="text" name="Apellidos" class="form-control" placeholder="Ej: Mendoza" required />
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Especialidad:</label>
-                <input type="text" name="Especialidad" class="form-control" placeholder="Ej: Cardiología" required />
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">CI:</label>
+                    <input type="text" name="CI" class="form-control" placeholder="Ej: 4512389" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Especialidad:</label>
+                    <input type="text" name="Especialidad" class="form-control" placeholder="Ej: Cardiología" required />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Teléfono:</label>
+                    <input type="text" name="Telefono" class="form-control" placeholder="Ej: 70145892" required />
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary">➕ Registrar Médico</button>
+            <button type="submit" class="btn btn-primary">➕ Guardar Médico</button>
         </form>
     </div>
 
-    <!-- 3. FORMULARIO ACTUALIZAR -->
-    <div class="tab-pane fade" id="actualizar">
-        <h4>Actualizar Médico</h4>
+    <!-- 3. ACTUALIZAR MÉDICO -->
+    <div class="tab-pane fade" id="actualizar-medico">
+        <h4>Actualizar Datos del Médico</h4>
         <form asp-controller="Medicos" asp-action="Edit" method="post" class="mt-3">
             <div class="mb-3">
-                <label class="form-label">ID del Médico a Modificar:</label>
+                <label class="form-label">ID del Médico:</label>
                 <input type="number" name="id" class="form-control" placeholder="Ingrese el ID" required />
             </div>
-            <div class="mb-3">
-                <label class="form-label">Nuevo Nombre:</label>
-                <input type="text" name="Nombre" class="form-control" placeholder="Dejar en blanco para mantener el actual" />
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Nuevos Nombres:</label>
+                    <input type="text" name="Nombres" class="form-control" placeholder="Dejar en blanco para mantener" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Nuevos Apellidos:</label>
+                    <input type="text" name="Apellidos" class="form-control" placeholder="Dejar en blanco para mantener" />
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label">Nueva Especialidad:</label>
-                <input type="text" name="Especialidad" class="form-control" placeholder="Dejar en blanco para mantener la actual" />
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Nuevo CI:</label>
+                    <input type="text" name="CI" class="form-control" placeholder="Dejar en blanco para mantener" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Nueva Especialidad:</label>
+                    <input type="text" name="Especialidad" class="form-control" placeholder="Dejar en blanco para mantener" />
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Nuevo Teléfono:</label>
+                    <input type="text" name="Telefono" class="form-control" placeholder="Dejar en blanco para mantener" />
+                </div>
             </div>
-            <button type="submit" class="btn btn-warning">✏️ Actualizar Datos</button>
+            <button type="submit" class="btn btn-warning">✏️ Actualizar Médico</button>
         </form>
     </div>
 
-    <!-- 4. FORMULARIO BORRAR -->
-    <div class="tab-pane fade" id="borrar">
-        <h4>Borrar Médico</h4>
+    <!-- 4. ELIMINAR MÉDICO -->
+    <div class="tab-pane fade" id="eliminar-medico">
+        <h4>Eliminar Médico</h4>
         <form asp-controller="Medicos" asp-action="Delete" method="post" class="mt-3">
             <div class="mb-3">
                 <label class="form-label">ID del Médico a Eliminar:</label>
-                <input type="number" name="id" class="form-control" placeholder="Ingrese el ID del médico" required />
+                <input type="number" name="id" class="form-control" placeholder="Ingrese el ID" required />
             </div>
-            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Confirma que desea eliminar este médico?');">🗑️ Eliminar Médico</button>
+            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Está seguro de eliminar este médico?');">🗑️ Eliminar Médico</button>
         </form>
     </div>
 
